@@ -1,0 +1,92 @@
+micronaut:
+  application:
+    name: kafka-device-measure-sender
+
+endpoints:
+  health:
+    enabled: true
+    sensitive: false # non-secured endpoint
+    details-visible: ANONYMOUS # show details for everyone
+    # disable some indicators
+    disk-space:
+      enabled: false
+    discovery-client:
+      enabled: false
+    service:
+      enabled: false
+
+# Kafka Configuration
+kafka:
+  enabled: true
+
+  health:
+    enabled: true
+
+  bootstrap:
+    servers: localhost:9092
+    #  ssl:
+    #    keystore:
+    #      location: /path/to/client.keystore.p12
+    #      password: secret
+    #    truststore:
+    #      location: /path/to/client.truststore.jks
+    #      password: secret
+    #      type: PKCS12
+    #  security:
+    #    protocol: SSL
+  producers:
+    device-measure-client:
+      acks: all
+      enable.idempotence: true
+
+# Kafka Topic to write data into
+
+app:
+  device:
+    sender:
+      kafka:
+        client-id: demo-iot-domestic-energy-device-producer
+        topic-source: demo.iot.domestic-energy.device-measures.json
+
+data:
+  # List of devices (used to mock events)
+  devices:
+    - owner-name: 'Stephen Strange'
+      device:
+        name: Microwave
+        watts: 1000
+
+    - owner-name : 'Petter Parker'
+      device:
+        name: 'Coffee Maker'
+        watts: 1000
+
+    - owner-name : 'Petter Parker'
+      device:
+        name: 'Kettle'
+        watts: 1200
+
+    - owner-name: 'Tony Stark'
+      device:
+        name: 'Washing Machine'
+        watts:  800
+
+    - owner-name: 'Tony Stark'
+      device:
+        name: 'Iron'
+        watts: 1200
+
+    - owner-name: 'Bruce Banner'
+      device:
+        name: 'Laptop'
+        watts: 100
+
+    - owner-name: 'Bruce Banner'
+      device:
+        name: 'TV – LCD'
+        watts: 150
+
+    - owner-name: 'Steve Rogers'
+      device:
+        name: 'Oven'
+        watts: 1200
